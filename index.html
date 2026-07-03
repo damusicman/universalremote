@@ -3,94 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Media Portal - Vintage Clicker Edition</title>
+<title>Media Portal - Magnavox Wand 1.25x</title>
 <style>
     :root {
-        /* Retro Console Materials */
-        --wood-trim:     #5c3a21;   /* Faux woodgrain side panelling */
-        --plastic-body:  #282c30;   /* Textured dark matte plastic */
-        --bezel-dark:    #151719;   /* Deep inset housing shadow */
+        --wood-trim:     #422917;   
+        --plastic-body:  #212427;   
+        --bezel-dark:    #0a0b0c;   
         
-        /* Vintage LED Readout Specs */
-        --led-window:    #220002;   /* Smoked red translucent plastic window */
-        --led-glow:      #ff3b30;   /* Vibrant 70s neon-red segment diode */
+        --led-window:    #160102;   
+        --led-glow:      #ff2e24;   
+        --led-dim:       rgba(255, 46, 36, 0.25);
         
-        /* Rubbery Keypad Palette */
-        --btn-rubber:    #d2d7df;   /* Standard cream/grey rubber key */
-        --btn-shadow:    #9aa0aa;   /* Under-button physical shoulder */
-        --btn-power:     #e03a3e;   /* Command red toggle */
-        --btn-power-shd: #9e2326;
-        --btn-alt:       #3a404a;   /* Darker function key modifier */
-        --btn-alt-shd:   #1f2227;
+        --btn-rubber:    #e5e9ed;   
+        --btn-shadow:    #a3acb9;   
+        --btn-clear:     #dc3538;   
+        --btn-clear-shd: #921e20;
     }
 
     * { box-sizing: border-box; }
 
     body {
         font-family: "Courier New", Courier, monospace;
-        background: #121416;
-        color: #a5b0bc;
+        background: #090a0b;
+        color: #909da9;
         margin: 0;
-        padding: 20px;
+        padding: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100vh;
+        overflow: hidden; /* Strict viewport defense */
     }
 
-    /* Outer Remote Housing */
+    /* Tall, Thin Wand Chassis scaled up 25% (250px -> 312px) */
     .remote-chassis {
         width: 100%;
-        max-width: 310px; /* Slim, elongated hand-held footprint */
+        max-width: 312px; 
         background: var(--plastic-body);
         border-left: 10px solid var(--wood-trim);
         border-right: 10px solid var(--wood-trim);
-        border-top: 6px solid #1f2225;
-        border-bottom: 16px solid #111315;
-        border-radius: 24px;
-        padding: 30px 18px;
+        border-top: 6px solid #1a1c1e;
+        border-bottom: 15px solid #0b0c0d;
+        border-radius: 28px;
+        padding: 28px 15px 18px 15px;
         box-shadow: 
-            0 30px 60px rgba(0,0,0,0.8),
-            inset 0 2px 2px rgba(255,255,255,0.1);
+            0 38px 75px rgba(0,0,0,0.9),
+            inset 0 1px 1px rgba(255,255,255,0.06);
         text-align: center;
     }
 
-    /* Brand Stamp */
+    /* Scaled Header */
+    .remote-header {
+        margin-bottom: 20px;
+        border-bottom: 1px dashed #2f353c;
+        padding-bottom: 10px;
+    }
+
     .remote-brand {
-        font-size: 13px;
+        font-size: 16px; /* Expanded scaling */
         font-weight: 900;
-        letter-spacing: 0.25em;
-        color: #76828e;
+        letter-spacing: 0.4em; 
+        color: #8da2b3;
         text-transform: uppercase;
-        margin-bottom: 4px;
+        text-shadow: 0px 1px 0px rgba(0,0,0,0.9);
     }
 
     .remote-model {
         font-size: 8px;
-        letter-spacing: 0.1em;
-        color: #4f5861;
-        margin-bottom: 20px;
+        letter-spacing: 0.15em;
+        color: #4e5963;
+        margin-top: 4px;
+        text-transform: uppercase;
     }
 
-    /* Infrared / Smoked LED Display Box */
+    /* Expanded Smoked Glass Window */
     .led-display-window {
         background: var(--led-window);
         border: 4px solid var(--bezel-dark);
-        border-radius: 4px;
-        padding: 10px;
-        margin-bottom: 30px;
+        border-radius: 5px;
+        padding: 10px 12px;
+        margin-bottom: 22px;
         box-shadow: 
-            inset 0 4px 8px rgba(0,0,0,0.9),
+            inset 0 5px 10px rgba(0,0,0,0.95),
             0 1px 1px rgba(255,255,255,0.05);
+        text-align: left;
     }
 
-    .display-meta {
-        font-size: 8px;
-        color: rgba(255, 59, 48, 0.4);
+    .display-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9px;
+        color: var(--led-dim);
+        font-weight: bold;
         text-transform: uppercase;
-        text-align: left;
-        margin-bottom: 6px;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
+        margin-bottom: 5px;
+        border-bottom: 1px solid rgba(255, 46, 36, 0.08);
+        padding-bottom: 3px;
+    }
+
+    .display-subtext {
+        font-size: 8px;
+        color: rgba(255, 46, 36, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-top: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     input[type="text"] {
@@ -102,7 +122,7 @@
         font-size: 18px;
         font-weight: bold;
         text-transform: uppercase;
-        text-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+        text-shadow: 0 0 8px rgba(255, 46, 36, 0.65);
         padding: 2px 0;
     }
 
@@ -111,30 +131,43 @@
     }
 
     input[type="text"]::placeholder {
-        color: rgba(255, 59, 48, 0.15);
+        color: rgba(255, 46, 36, 0.08);
         text-shadow: none;
     }
 
-    /* Matrix Command Grid (3 Columns) */
+    /* Control Deck Decking */
+    .matrix-container {
+        background: #17181b;
+        padding: 18px 10px;
+        border-radius: 15px;
+        border: 4px solid var(--bezel-dark);
+        box-shadow: inset 0 4px 8px rgba(0,0,0,0.7);
+    }
+
+    .matrix-label {
+        font-size: 8.5px;
+        letter-spacing: 0.1em;
+        color: #444c54;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-weight: bold;
+    }
+
+    /* 3-Column Grid */
     .button-matrix {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px 12px;
-        background: #1f2225;
-        padding: 22px 14px;
-        border-radius: 12px;
-        border: 3px solid var(--bezel-dark);
-        box-shadow: inset 0 3px 8px rgba(0,0,0,0.6);
+        gap: 20px 10px; /* Enhanced vertical separation */
     }
 
-    /* Tactile Rubber Button Mechanics */
+    /* Tactile Buttons Scaled Up 25% (46px -> 58px) */
     .clicker-key {
         border: none;
         font-family: inherit;
-        font-weight: bold;
-        font-size: 9px;
+        font-weight: 800;
+        font-size: 10px;
         text-transform: uppercase;
-        height: 54px;
+        height: 58px; 
         border-radius: 6px;
         cursor: pointer;
         display: flex;
@@ -144,48 +177,41 @@
         position: relative;
     }
 
-    /* Stamped Tab Icon Properties */
     .clicker-key img {
-        width: 22px;
-        height: 22px;
-        margin-bottom: 3px;
+        width: 19px;
+        height: 19px;
+        margin-bottom: 4px;
         object-fit: contain;
-        opacity: 0.9; 
     }
 
-    /* Color Classes for Keys */
     .key-standard {
         background: var(--btn-rubber);
-        color: #222;
-        box-shadow: 0 4px 0 var(--btn-shadow), 0 5px 4px rgba(0,0,0,0.6);
+        color: #1a1c1e;
+        box-shadow: 0 4px 0 var(--btn-shadow), 0 5px 5px rgba(0,0,0,0.5);
     }
 
-    .key-alt {
-        background: var(--btn-alt);
-        color: #fff;
-        box-shadow: 0 4px 0 var(--btn-alt-shd), 0 5px 4px rgba(0,0,0,0.6);
+    .key-clear {
+        background: var(--btn-clear);
+        color: #ffffff;
+        box-shadow: 0 4px 0 var(--btn-clear-shd), 0 5px 5px rgba(0,0,0,0.5);
     }
 
-    .key-power {
-        background: var(--btn-power);
-        color: #fff;
-        box-shadow: 0 4px 0 var(--btn-power-shd), 0 5px 4px rgba(0,0,0,0.6);
+    .key-clear span {
+        font-size: 10.5px;
+        font-weight: bold;
     }
 
-    /* Compression Event Simulation */
     .clicker-key:active {
         transform: translateY(3px);
-        box-shadow: 0 1px 0 rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.6);
+        box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.5);
     }
 
-    /* Vintage Print Underneath/Above Buttons */
-    .key-print {
-        font-size: 7px;
-        color: #fff;
-        font-weight: bold;
-        margin-top: 1px;
-        opacity: 0.6;
-        letter-spacing: -0.05em;
+    .chassis-footer {
+        margin-top: 18px;
+        font-size: 7.5px;
+        color: #373d44;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 </style>
 </head>
@@ -193,118 +219,131 @@
 
 <div class="remote-chassis">
     <!-- Brand Identification -->
-    <div class="remote-brand">Magnavox</div>
-    <div class="remote-model">CHASSIS model-77x</div>
+    <div class="remote-header">
+        <div class="remote-brand">Magnavox</div>
+        <div class="remote-model">Matrix Controller // Model-77X</div>
+    </div>
 
     <!-- Smoked Glass Readout Window -->
     <div class="led-display-window">
-        <div class="display-meta">Tuning Index // Channel Entry</div>
-        <input type="text" id="movieQuery" placeholder="ENTER TITLE..." required autocomplete="off">
+        <div class="display-header">
+            <span>Tuning Index</span>
+            <span id="statusIndicator">Ready</span>
+        </div>
+        <input type="text" id="movieQuery" placeholder="<i>The Matrix (1999)...</i>" required autocomplete="off" oninput="updateSubtext()">
+        <div class="display-subtext" id="displaySubtext">Awaiting Vector Parameters...</div>
     </div>
 
-    <!-- Interface Clicker Matrix -->
-    <div class="button-matrix">
-        <!-- Row 1 -->
-        <button class="clicker-key key-standard" onclick="search('letterboxd')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%231c252d'/><circle cx='7' cy='12' r='3.5' fill='%23ff8000'/><circle cx='12' cy='12' r='3.5' fill='%2300e054'/><circle cx='17' cy='12' r='3.5' fill='%2300b0ff'/></svg>" alt="">
-            <span>L-BX</span>
-        </button>
-        <button class="clicker-key key-standard" onclick="search('ipt')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='4' fill='%232b2b2b'/><text x='12' y='16' font-family='sans-serif' font-weight='bold' font-size='9' fill='%23fff' text-anchor='middle'>IPt</text></svg>" alt="">
-            <span>IPT</span>
-        </button>
-        <button class="clicker-key key-standard" onclick="search('karagarga')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M12 85C10 65 14 32 32 18C45 8 62 12 67 28C70 38 67 47 62 52C58 65 60 78 61 85Z' fill='%234d5154'/><path d='M62 52C76 52 86 50 94 46C90 52 80 55 67 55C63 55 61 53 62 52Z' fill='%23fca311'/><path d='M67 28C78 28 89 34 97 46C86 49 75 52 62 52C65 44 66 35 67 28Z' fill='%23ffb703'/><circle cx='49' cy='39' r='7' fill='%23ffb703'/><circle cx='49' cy='39' r='3.5' fill='%234d5154'/></svg>" alt="crow.jpg">
-            <span>KG</span>
-        </button>
+    <!-- Interface Clicker Matrix Container -->
+    <div class="matrix-container">
+        <div class="matrix-label">Select Destination Network</div>
+        <div class="button-matrix">
+            <!-- Row 1 -->
+            <button class="clicker-key key-standard" onclick="search('letterboxd')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%231c252d'/><circle cx='7' cy='12' r='3.5' fill='%23ff8000'/><circle cx='12' cy='12' r='3.5' fill='%2300e054'/><circle cx='17' cy='12' r='3.5' fill='%2300b0ff'/></svg>" alt="">
+                <span>L-BX</span>
+            </button>
+            <button class="clicker-key key-standard" onclick="search('ipt')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='4' fill='%232b2b2b'/><text x='12' y='16' font-family='sans-serif' font-weight='bold' font-size='9' fill='%23fff' text-anchor='middle'>IPt</text></svg>" alt="">
+                <span>IPT</span>
+            </button>
+            <button class="clicker-key key-standard" onclick="search('karagarga')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M12 85C10 65 14 32 32 18C45 8 62 12 67 28C70 38 67 47 62 52C58 65 60 78 61 85Z' fill='%234d5154'/><path d='M62 52C76 52 86 50 94 46C90 52 80 55 67 55C63 55 61 53 62 52Z' fill='%23fca311'/><path d='M67 28C78 28 89 34 97 46C86 49 75 52 62 52C65 44 66 35 67 28Z' fill='%23ffb703'/><circle cx='49' cy='39' r='7' fill='%23ffb703'/><circle cx='49' cy='39' r='3.5' fill='%234d5154'/></svg>" alt="">
+                <span>KG</span>
+            </button>
 
-        <!-- Row 2 -->
-        <button class="clicker-key key-standard" onclick="search('rutracker')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><path d='M12 2l2 5 5 1-4 4 1 5-4-3-4 3 1-5-4-4 5-1z' fill='%23e11b22'/><path d='M7 9l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z' fill='%2300a651' opacity='0.85'/><path d='M16 11l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z' fill='%230054a6' opacity='0.85'/></svg>" alt="">
-            <span>RU-T</span>
-        </button>
-        <button class="clicker-key key-standard" onclick="search('ext')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%230076c6'/><text x='12' y='17' font-family='sans-serif' font-weight='900' font-size='15' fill='%23fff' text-anchor='middle'>E</text></svg>" alt="">
-            <span>EXT</span>
-        </button>
-        <button class="clicker-key key-standard" onclick="search('abnzb')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='2' fill='%23000'/><text x='12' y='15' font-family='monospace' font-weight='bold' font-size='10' fill='%23bbb' text-anchor='middle'>AB</text></svg>" alt="">
-            <span>NZB</span>
-        </button>
+            <!-- Row 2 -->
+            <button class="clicker-key key-standard" onclick="search('rutracker')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><path d='M12 2l2 5 5 1-4 4 1 5-4-3-4 3 1-5-4-4 5-1z' fill='%23e11b22'/><path d='M7 9l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z' fill='%2300a651' opacity='0.85'/><path d='M16 11l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z' fill='%230054a6' opacity='0.85'/></svg>" alt="">
+                <span>RU-T</span>
+            </button>
+            <button class="clicker-key key-standard" onclick="search('ext')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%230076c6'/><text x='12' y='17' font-family='sans-serif' font-weight='900' font-size='15' fill='%23fff' text-anchor='middle'>E</text></svg>" alt="">
+                <span>EXT</span>
+            </button>
+            <button class="clicker-key key-standard" onclick="search('abnzb')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='2' fill='%23000'/><text x='12' y='15' font-family='monospace' font-weight='bold' font-size='10' fill='%23bbb' text-anchor='middle'>AB</text></svg>" alt="">
+                <span>NZB</span>
+            </button>
 
-        <!-- Row 3 -->
-        <button class="clicker-key key-standard" onclick="search('tpb')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><rect x='4' y='5' width='16' height='10' rx='1' fill='%23111'/><circle cx='8' cy='10' r='1.5' fill='%23fff'/><circle cx='16' cy='10' r='1.5' fill='%23fff'/><path d='M3 19l18-3M3 16l18 3' stroke='%23111' stroke-width='2' stroke-linecap='round'/></svg>" alt="">
-            <span>TPB</span>
-        </button>
-        <button class="clicker-key key-standard" onclick="search('1337x')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc4727' stroke-width='5' stroke-linecap='round'><path d='M5 5l14 14M19 5L5 19'/></svg>" alt="">
-            <span>1337x</span>
-        </button>
-        <button class="clicker-key key-power" onclick="clearInput()"></button>
+            <!-- Row 3 -->
+            <button class="clicker-key key-standard" onclick="search('tpb')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><rect x='4' y='5' width='16' height='10' rx='1' fill='%23111'/><circle cx='8' cy='10' r='1.5' fill='%23fff'/><circle cx='16' cy='10' r='1.5' fill='%23fff'/><path d='M3 19l18-3M3 16l18 3' stroke='%23111' stroke-width='2' stroke-linecap='round'/></svg>" alt="">
+                <span>TPB</span>
+            </button>
+            <button class="clicker-key key-standard" onclick="search('1337x')">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc4727' stroke-width='5' stroke-linecap='round'><path d='M5 5l14 14M19 5L5 19'/></svg>" alt="">
+                <span>1337x</span>
+            </button>
+            
+            <!-- Master Reset Key -->
+            <button class="clicker-key key-clear" onclick="clearInput()">
+                <span>CLR</span>
+            </button>
+        </div>
     </div>
+    
+    <div class="chassis-footer">Infrared Command Link</div>
 </div>
 
 <script>
+function updateSubtext() {
+    const query = document.getElementById('movieQuery').value.trim();
+    const subtext = document.getElementById('displaySubtext');
+    const indicator = document.getElementById('statusIndicator');
+    
+    if (query) {
+        subtext.innerText = `READY: EMIT FREQUENCY`;
+        indicator.innerText = "HOLD..";
+    } else {
+        subtext.innerText = "Awaiting Vector Parameters...";
+        indicator.innerText = "Ready";
+    }
+}
+
+// Fixed functionality alignment from index (1).html 
 function clearInput() {
     const input = document.getElementById('movieQuery');
     input.value = '';
+    updateSubtext();
     input.focus();
 }
 
 function search(platform) {
     const query = document.getElementById('movieQuery').value.trim();
+    const indicator = document.getElementById('statusIndicator');
+    const subtext = document.getElementById('displaySubtext');
 
     if (!query) {
+        indicator.innerText = "ERR_";
+        subtext.innerText = "HALT: SIGNALS VOID";
         alert('SIGNAL ERROR: Command sequence empty.');
         return;
     }
 
+    indicator.innerText = "TX_SND";
+    subtext.innerText = `LINKING: ${platform.toUpperCase()}`;
+    
     let url = '';
     const generalQuery = encodeURIComponent(query);
-    
-    // Create a space-to-plus query format that leaves other punctuation intact 
-    // to keep finicky backend tokenizers from dropping searches.
     const plusQuery = encodeURIComponent(query).replace(/%20/g, '+');
 
     switch(platform) {
-        case 'letterboxd':
-            url = `https://letterboxd.com/search/${generalQuery}/`;
-            break;
-
-        case 'ipt':
-            url = `https://ipt.cool/t?72=&q=${generalQuery}&qf=#torrents`;
-            break;
-
-        case 'karagarga':
-            url = `https://karagarga.in/browse.php?search=${plusQuery}&search_type=torrent`;
-            break;
-            
-        case 'rutracker':
-            url = `https://rutracker.org/forum/tracker.php?nm=${generalQuery}`;
-            break;
-            
-        case 'ext':
-            // Removed trailing slash directly preceding the query string
-            url = `https://ext.to/browse?q=${plusQuery}`;
-            break;
-
-        case 'abnzb':
-            url = `https://abnzb.com/search/${generalQuery}`;
-            break;
-
-        case 'tpb':
-            url = `https://thepiratebay.org/search.php?q=${plusQuery}`;
-            break;
-
-        case '1337x':
-            url = `https://1337x.to/search/${plusQuery}/1/`;
-            break;
+        case 'letterboxd': url = `https://letterboxd.com/search/${generalQuery}/`; break;
+        case 'ipt':        url = `https://ipt.cool/t?72=&q=${generalQuery}&qf=#torrents`; break;
+        case 'karagarga':  url = `https://karagarga.in/browse.php?search=${plusQuery}&search_type=torrent`; break;
+        case 'rutracker':  url = `https://rutracker.org/forum/tracker.php?nm=${generalQuery}`; break;
+        case 'ext':        url = `https://ext.to/browse?q=${plusQuery}`; break;
+        case 'abnzb':      url = `https://abnzb.com/search/${generalQuery}`; break;
+        case 'tpb':        url = `https://thepiratebay.org/search.php?q=${plusQuery}`; break;
+        case '1337x':      url = `https://1337x.to/search/${plusQuery}/1/`; break;
     }
 
     if (url) {
         window.open(url, '_blank');
     }
+    
+    setTimeout(() => { updateSubtext(); }, 1500);
 }
 </script>
 
