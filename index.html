@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Portal - Vintage Clicker Edition</title>
+<style>
+    :root {
+        /* Retro Console Materials */
+        --wood-trim:     #5c3a21;   /* Faux woodgrain side panelling */
+        --plastic-body:  #282c30;   /* Textured dark matte plastic */
+        --bezel-dark:    #151719;   /* Deep inset housing shadow */
+        
+        /* Vintage LED Readout Specs */
+        --led-window:    #220002;   /* Smoked red translucent plastic window */
+        --led-glow:      #ff3b30;   /* Vibrant 70s neon-red segment diode */
+        
+        /* Rubbery Keypad Palette */
+        --btn-rubber:    #d2d7df;   /* Standard cream/grey rubber key */
+        --btn-shadow:    #9aa0aa;   /* Under-button physical shoulder */
+        --btn-power:     #e03a3e;   /* Command red toggle */
+        --btn-power-shd: #9e2326;
+        --btn-alt:       #3a404a;   /* Darker function key modifier */
+        --btn-alt-shd:   #1f2227;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: "Courier New", Courier, monospace;
+        background: #121416;
+        color: #a5b0bc;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* Outer Remote Housing */
+    .remote-chassis {
+        width: 100%;
+        max-width: 310px; /* Slim, elongated hand-held footprint */
+        background: var(--plastic-body);
+        border-left: 10px solid var(--wood-trim);
+        border-right: 10px solid var(--wood-trim);
+        border-top: 6px solid #1f2225;
+        border-bottom: 16px solid #111315;
+        border-radius: 24px;
+        padding: 30px 18px;
+        box-shadow: 
+            0 30px 60px rgba(0,0,0,0.8),
+            inset 0 2px 2px rgba(255,255,255,0.1);
+        text-align: center;
+    }
+
+    /* Brand Stamp */
+    .remote-brand {
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.25em;
+        color: #76828e;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+
+    .remote-model {
+        font-size: 8px;
+        letter-spacing: 0.1em;
+        color: #4f5861;
+        margin-bottom: 20px;
+    }
+
+    /* Infrared / Smoked LED Display Box */
+    .led-display-window {
+        background: var(--led-window);
+        border: 4px solid var(--bezel-dark);
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 30px;
+        box-shadow: 
+            inset 0 4px 8px rgba(0,0,0,0.9),
+            0 1px 1px rgba(255,255,255,0.05);
+    }
+
+    .display-meta {
+        font-size: 8px;
+        color: rgba(255, 59, 48, 0.4);
+        text-transform: uppercase;
+        text-align: left;
+        margin-bottom: 6px;
+        letter-spacing: 0.05em;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--led-glow);
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+        padding: 2px 0;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+    }
+
+    input[type="text"]::placeholder {
+        color: rgba(255, 59, 48, 0.15);
+        text-shadow: none;
+    }
+
+    /* Matrix Command Grid (3 Columns) */
+    .button-matrix {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px 12px;
+        background: #1f2225;
+        padding: 22px 14px;
+        border-radius: 12px;
+        border: 3px solid var(--bezel-dark);
+        box-shadow: inset 0 3px 8px rgba(0,0,0,0.6);
+    }
+
+    /* Tactile Rubber Button Mechanics */
+    .clicker-key {
+        border: none;
+        font-family: inherit;
+        font-weight: bold;
+        font-size: 9px;
+        text-transform: uppercase;
+        height: 52px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    /* Stamped Tab Icon Properties */
+    .clicker-key img {
+        width: 18px;
+        height: 18px;
+        margin-bottom: 4px;
+        object-fit: contain;
+        /* Slight opacity blend to make them look printed onto the physical rubber */
+        opacity: 0.9; 
+    }
+
+    /* Color Classes for Keys */
+    .key-standard {
+        background: var(--btn-rubber);
+        color: #222;
+        box-shadow: 0 4px 0 var(--btn-shadow), 0 5px 4px rgba(0,0,0,0.6);
+    }
+
+    .key-alt {
+        background: var(--btn-alt);
+        color: #fff;
+        box-shadow: 0 4px 0 var(--btn-alt-shd), 0 5px 4px rgba(0,0,0,0.6);
+    }
+
+    .key-power {
+        background: var(--btn-power);
+        color: #fff;
+        box-shadow: 0 4px 0 var(--btn-power-shd), 0 5px 4px rgba(0,0,0,0.6);
+    }
+
+    /* Compression Event Simulation */
+    .clicker-key:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    /* Vintage Print Underneath/Above Buttons */
+    .key-print {
+        font-size: 7px;
+        color: #fff;
+        font-weight: bold;
+        margin-top: 1px;
+        opacity: 0.6;
+        letter-spacing: -0.05em;
+    }
+</style>
+</head>
+<body>
+
+<div class="remote-chassis">
+    <!-- Brand Identification -->
+    <div class="remote-brand">Magnavox</div>
+    <div class="remote-model">CHASSIS model-77x</div>
+
+    <!-- Smoked Glass Readout Window -->
+    <div class="led-display-window">
+        <div class="display-meta">Tuning Index // Channel Entry</div>
+        <input type="text" id="movieQuery" placeholder="ENTER TITLE..." required autocomplete="off">
+    </div>
+
+    <!-- Interface Clicker Matrix -->
+    <div class="button-matrix">
+        <!-- Row 1 -->
+        <button class="clicker-key key-standard" onclick="search('letterboxd')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=letterboxd.com" alt="">
+            <span>L-BX</span>
+        </button>
+        <button class="clicker-key key-standard" onclick="search('ipt')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=ipt.cool" alt="">
+            <span>IPT</span>
+        </button>
+        <button class="clicker-key key-standard" onclick="search('karagarga')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=karagarga.in" alt="">
+            <span>KG</span>
+        </button>
+
+        <!-- Row 2 -->
+        <button class="clicker-key key-standard" onclick="search('rutracker')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=rutracker.org" alt="">
+            <span>RU-T</span>
+        </button>
+        <button class="clicker-key key-standard" onclick="search('ext')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=ext.to" alt="">
+            <span>EXT</span>
+        </button>
+        <button class="clicker-key key-standard" onclick="search('abnzb')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=abnzb.com" alt="">
+            <span>NZB</span>
+        </button>
+
+        <!-- Row 3 -->
+        <button class="clicker-key key-standard" onclick="search('tpb')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=thepiratebay.org" alt="">
+            <span>TPB</span>
+        </button>
+        <button class="clicker-key key-standard" onclick="search('1337x')">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=1337x.to" alt="">
+            <span>1337x</span>
+        </button>
+        <button class="clicker-key key-power" onclick="clearInput()">
+            <!-- Clean text reset key acting as the master clear -->
+            <span style="font-size: 14px; line-height: 1;">⊗</span>
+            <span class="key-print" style="margin-top: 3px;">CLEAR</span>
+        </button>
+    </div>
+</div>
+
+<script>
+function clearInput() {
+    const input = document.getElementById('movieQuery');
+    input.value = '';
+    input.focus();
+}
+
+function search(platform) {
+    const query = document.getElementById('movieQuery').value.trim();
+
+    if (!query) {
+        alert('SIGNAL ERROR: Command sequence empty.');
+        return;
+    }
+
+    let url = '';
+    const generalQuery = encodeURIComponent(query);
+    const plusQuery = encodeURIComponent(query).replace(/%20/g, '+');
+
+    switch(platform) {
+        case 'letterboxd':
+            url = `https://letterboxd.com/search/${generalQuery}/`;
+            break;
+
+        case 'ipt':
+            url = `https://ipt.cool/t?72=&q=${generalQuery}&qf=#torrents`;
+            break;
+
+        case 'karagarga':
+            url = `https://karagarga.in/browse.php?search=${plusQuery}&search_type=torrent`;
+            break;
+            
+        case 'rutracker':
+            url = `https://rutracker.org/forum/tracker.php?nm=${generalQuery}`;
+            break;
+            
+        case 'ext':
+            url = `https://ext.to/search/?q=${generalQuery}`;
+            break;
+
+        case 'abnzb':
+            url = `https://abnzb.com/search/${generalQuery}`;
+            break;
+
+        case 'tpb':
+            url = `https://thepiratebay.org/search.php?q=${plusQuery}`;
+            break;
+
+        case '1337x':
+            url = `https://1337x.to/search/${plusQuery}/1/`;
+            break;
+    }
+
+    if (url) {
+        window.open(url, '_blank');
+    }
+}
+</script>
+
+</body>
+</html>
