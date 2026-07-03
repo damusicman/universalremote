@@ -214,7 +214,7 @@
             <span>IPT</span>
         </button>
         <button class="clicker-key key-standard" onclick="search('karagarga')">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M12 85C10 65 14 32 32 18C45 8 62 12 67 28C70 38 67 47 62 52C58 65 60 78 61 85Z' fill='%234d5154'/><path d='M62 52C76 52 86 50 94 46C90 52 80 55 67 55C63 55 61 53 62 52Z' fill='%23fca311'/><path d='M67 28C78 28 89 34 97 46C86 49 75 52 62 52C65 44 66 35 67 28Z' fill='%23ffb703'/><circle cx='49' cy='39' r='7' fill='%23ffb703'/><circle cx='49' cy='39' r='3.5' fill='%234d5154'/></svg>" alt="">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M12 85C10 65 14 32 32 18C45 8 62 12 67 28C70 38 67 47 62 52C58 65 60 78 61 85Z' fill='%234d5154'/><path d='M62 52C76 52 86 50 94 46C90 52 80 55 67 55C63 55 61 53 62 52Z' fill='%23fca311'/><path d='M67 28C78 28 89 34 97 46C86 49 75 52 62 52C65 44 66 35 67 28Z' fill='%23ffb703'/><circle cx='49' cy='39' r='7' fill='%23ffb703'/><circle cx='49' cy='39' r='3.5' fill='%234d5154'/></svg>" alt="crow.jpg">
             <span>KG</span>
         </button>
 
@@ -262,6 +262,9 @@ function search(platform) {
 
     let url = '';
     const generalQuery = encodeURIComponent(query);
+    
+    // Create a space-to-plus query format that leaves other punctuation intact 
+    // to keep finicky backend tokenizers from dropping searches.
     const plusQuery = encodeURIComponent(query).replace(/%20/g, '+');
 
     switch(platform) {
@@ -282,7 +285,8 @@ function search(platform) {
             break;
             
         case 'ext':
-            url = `https://ext.to/browse/?q=${plusQuery}`;
+            // Removed trailing slash directly preceding the query string
+            url = `https://ext.to/browse?q=${plusQuery}`;
             break;
 
         case 'abnzb':
